@@ -37,7 +37,7 @@ class SideMenuItem extends StatelessWidget {
                   height: 54,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Colors.grey),
+                      color: const Color.fromARGB(255, 99, 117, 251)),
                 ),
               ),
               ListTile(

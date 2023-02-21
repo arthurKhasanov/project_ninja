@@ -65,7 +65,7 @@ class _SideMenuState extends State<SideMenu> {
       body: Container(
         width: 288,
         height: double.infinity,
-        color: const Color.fromARGB(255, 32, 0, 121),
+        color:const Color.fromARGB(255, 17, 0, 63),
         child: SafeArea(
           child: Column(
             children: [
