@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 
-class MenuButton extends StatelessWidget {
+class MenuButton extends StatefulWidget {
   const MenuButton({
     super.key,
-    required this.isSideMenuShowed,
+    required this.animationController,
     required this.onTap,
   });
 
-  final bool isSideMenuShowed;
+  final AnimationController animationController;
   final VoidCallback onTap;
 
   @override
+  State<MenuButton> createState() => _MenuButtonState();
+}
+
+class _MenuButtonState extends State<MenuButton> {
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: SafeArea(
         child: Container(
           width: 40,
@@ -30,15 +35,10 @@ class MenuButton extends StatelessWidget {
             ],
           ),
           child: Center(
-            child: AnimatedCrossFade(
-              duration: const Duration(milliseconds: 300),
-              crossFadeState: isSideMenuShowed
-                  ? CrossFadeState.showFirst
-                  : CrossFadeState.showSecond,
-              firstChild: const Icon(Icons.menu),
-              secondChild: const Icon(Icons.close),
-            ),
-          ),
+              child: AnimatedIcon(
+            icon: AnimatedIcons.menu_close,
+            progress: widget.animationController,
+          )),
         ),
       ),
     );
