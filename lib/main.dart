@@ -6,7 +6,6 @@ import 'package:flutter_b_ui_layout/widgets/home_screen.dart';
 import 'package:flutter_b_ui_layout/widgets/side_menu.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
@@ -35,7 +34,6 @@ class InitialScreen extends StatefulWidget {
 
 class _InitialScreenState extends State<InitialScreen>
     with SingleTickerProviderStateMixin {
-
   bool isSideMenuClosed = true;
   late AnimationController animationController;
   late Animation<double> animation;
@@ -43,7 +41,6 @@ class _InitialScreenState extends State<InitialScreen>
 
   @override
   void initState() {
-    // TODO: implement initState
     animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 200))
       ..addListener(() {
@@ -85,17 +82,27 @@ class _InitialScreenState extends State<InitialScreen>
               offset: Offset(animation.value * 288, 0),
               child: Transform.scale(
                 scale: scaleAnimation.value,
-                child: AnimatedContainer(
-                  clipBehavior: Clip.hardEdge,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.fastOutSlowIn,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadiusDirectional.only(
-                      topStart: Radius.circular(isSideMenuClosed ? 0 : 24),
-                      bottomStart: Radius.circular(isSideMenuClosed ? 0 : 24),
+                child: GestureDetector(
+                  onTap: () {
+                    if (!isSideMenuClosed) {
+                      animationController.reverse();
+                      setState(() {
+                        isSideMenuClosed = !isSideMenuClosed;
+                      });
+                    }
+                  },
+                  child: AnimatedContainer(
+                    clipBehavior: Clip.hardEdge,
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.fastOutSlowIn,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadiusDirectional.only(
+                        topStart: Radius.circular(isSideMenuClosed ? 0 : 24),
+                        bottomStart: Radius.circular(isSideMenuClosed ? 0 : 24),
+                      ),
                     ),
+                    child: const TasksScreen(),
                   ),
-                  child: const HomeScreen(),
                 ),
               ),
             ),
@@ -116,7 +123,6 @@ class _InitialScreenState extends State<InitialScreen>
                 setState(() {
                   isSideMenuClosed = !isSideMenuClosed;
                 });
-                debugPrint('$isSideMenuClosed isSideMenuClosed');
               },
             ),
           ),
@@ -125,4 +131,3 @@ class _InitialScreenState extends State<InitialScreen>
     );
   }
 }
-
