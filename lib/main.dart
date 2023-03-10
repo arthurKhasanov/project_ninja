@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_b_ui_layout/widgets/initial_screen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'auth/ui/pages/landing_page.dart';

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_b_ui_layout/domain/model/project.dart';
 import 'package:flutter_b_ui_layout/widgets/side_menu_item.dart';

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class AnimatedButton extends StatefulWidget {
-  const AnimatedButton({super.key, required this.onTap});
+class BouncingButton extends StatefulWidget {
+  const BouncingButton({super.key, required this.onTap, required this.child});
 
   final VoidCallback onTap;
+  final Widget child;
 
   @override
-  State<AnimatedButton> createState() => _AnimatedButtonState();
+  State<BouncingButton> createState() => _BouncingButtonState();
 }
 
-class _AnimatedButtonState extends State<AnimatedButton>
+class _BouncingButtonState extends State<BouncingButton>
     with SingleTickerProviderStateMixin {
-      
   late Animation<double> _scaleAnimation;
   late AnimationController _controller;
 
@@ -56,12 +56,8 @@ class _AnimatedButtonState extends State<AnimatedButton>
                   Colors.purple,
                 ],
               )),
-          child: const Center(
-            child: Text(
-              'Start now',
-              style: TextStyle(
-                  fontFamily: 'Montserrat', fontSize: 24, color: Colors.white),
-            ),
+          child: Center(
+            child: widget.child,
           ),
         ),
       ),
