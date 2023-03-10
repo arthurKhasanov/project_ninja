@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'auth/ui/pages/landing_page.dart';
 
 
 void main() async {
@@ -23,4 +22,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
