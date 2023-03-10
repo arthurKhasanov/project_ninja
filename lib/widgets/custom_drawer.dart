@@ -5,8 +5,8 @@ import 'package:flutter_b_ui_layout/widgets/user_info_card.dart';
 
 import '../domain/model/task.dart';
 
-class SideMenu extends StatefulWidget {
-  SideMenu({super.key});
+class CustomDrawer extends StatefulWidget {
+  CustomDrawer({super.key});
   final List<Project> projects = [
     Project(
       id: 1,
@@ -51,11 +51,10 @@ class SideMenu extends StatefulWidget {
   ];
 
   @override
-  State<SideMenu> createState() => _SideMenuState();
+  State<CustomDrawer> createState() => _CustomDrawerState();
 }
 
-class _SideMenuState extends State<SideMenu> {
-  
+class _CustomDrawerState extends State<CustomDrawer> {
   Project? selectedProject;
 
   @override
@@ -64,7 +63,7 @@ class _SideMenuState extends State<SideMenu> {
       body: Container(
         width: 288,
         height: double.infinity,
-        color:const Color.fromARGB(255, 17, 0, 63),
+        color: const Color.fromARGB(255, 17, 0, 63),
         child: SafeArea(
           child: Column(
             children: [
