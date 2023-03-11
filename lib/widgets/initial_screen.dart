@@ -72,7 +72,7 @@ class _InitialScreenState extends State<InitialScreen>
                       bottomStart: Radius.circular(isSideMenuClosed ? 0 : 24),
                     ),
                   ),
-                  child: const HomeScreen(),
+                  child: const TasksScreen(),
                 ),
               ),
             ),

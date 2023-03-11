@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rive/rive.dart';
 
 import '../widgets/animated_button.dart';
@@ -130,7 +129,8 @@ class _LandingPageState extends State<LandingPage> {
                                           TextSpan(
                                             text: 'Sign up with email ',
                                             style: const TextStyle(
-                                                color: Colors.indigo, fontSize: 16),
+                                                color: Colors.indigo,
+                                                fontSize: 16),
                                             recognizer: TapGestureRecognizer()
                                               ..onTap = () {
                                                 print('Sign Up with Email');
@@ -145,7 +145,8 @@ class _LandingPageState extends State<LandingPage> {
                                           TextSpan(
                                             text: 'Google account',
                                             style: const TextStyle(
-                                                color: Colors.red, fontSize: 16),
+                                                color: Colors.red,
+                                                fontSize: 16),
                                             recognizer: TapGestureRecognizer()
                                               ..onTap = () {
                                                 print(
