@@ -3,8 +3,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'auth/ui/pages/landing_page.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
@@ -17,9 +15,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const LandingPage(),
-      theme: ThemeData(useMaterial3: true),
+    return const MaterialApp(
+      home: LandingPage(),
       debugShowCheckedModeBanner: false,
     );
   }
