@@ -45,37 +45,40 @@ class LogInDialog extends StatelessWidget {
               Expanded(child: Divider()),
             ],
           ),
-          Center(
-            child: RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'Sign up with email ',
-                    style: const TextStyle(color: Colors.indigo, fontSize: 16),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        print('Sign Up with Email');
-                      },
-                  ),
-                  const TextSpan(
-                    text: 'or ',
-                    style: TextStyle(color: Colors.black87, fontSize: 16),
-                  ),
-                  TextSpan(
-                    text: 'Google account',
-                    style: const TextStyle(color: Colors.red, fontSize: 16),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        print('Sign Up with Google Account');
-                      },
-                  ),
-                ],
-              ),
-            ),
+          const Text(
+            'Sign up with email or Google account',
+            style: TextStyle(fontFamily: 'Inter', fontSize: 12),
           ),
+          const SizedBox(
+            height: 12,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  debugPrint('Mail');
+                },
+                child: Image.asset(
+                  'assets/icons/auth/mail.png',
+                  width: 35,
+                  height: 35,
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  debugPrint('Google');
+                },
+                child: Image.asset(
+                  'assets/icons/auth/google.png',
+                  width: 35,
+                  height: 35,
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
   }
 }
-
