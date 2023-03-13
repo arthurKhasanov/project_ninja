@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
-import '../widgets/animated_button.dart';
+import '../widgets/bouncing_button.dart';
 import '../widgets/login_dialog.dart';
 
 class LandingPage extends StatefulWidget {

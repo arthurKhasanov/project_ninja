@@ -1,6 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_b_ui_layout/auth/ui/widgets/sing_in_form.dart';
+
+import '../../../widgets/bouncing_widget.dart';
 
 class LogInDialog extends StatelessWidget {
   const LogInDialog({super.key});
@@ -55,8 +56,9 @@ class LogInDialog extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              GestureDetector(
+              BouncingWidget(
                 onTap: () {
+                  //TODO: add log in with email logic
                   debugPrint('Mail');
                 },
                 child: Image.asset(
@@ -65,8 +67,10 @@ class LogInDialog extends StatelessWidget {
                   height: 35,
                 ),
               ),
-              GestureDetector(
+              BouncingWidget(
                 onTap: () {
+                  //TODO: add log in with google logic
+
                   debugPrint('Google');
                 },
                 child: Image.asset(

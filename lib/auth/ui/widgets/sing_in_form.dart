@@ -11,18 +11,9 @@ class SignInForm extends StatelessWidget {
         children: [
           TextFormField(
             decoration: const InputDecoration(
-                hintText: 'Email',
-                hintStyle: TextStyle(
-                  fontFamily: 'Inter',
-                ),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                prefixIcon: Icon(FontAwesomeIcons.envelope),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(14),
-                  ),
-                )),
+              hintText: 'Email',
+              prefixIcon: Icon(FontAwesomeIcons.envelope),
+            ),
           ),
           const SizedBox(
             height: 16,
@@ -30,27 +21,35 @@ class SignInForm extends StatelessWidget {
           TextFormField(
             obscureText: true,
             decoration: const InputDecoration(
-                hintText: 'Password',
-                hintStyle: TextStyle(
-                  fontFamily: 'Inter',
-                ),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                prefixIcon: Icon(FontAwesomeIcons.lock),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(14),
-                  ),
-                )),
+              hintText: 'Password',
+              prefixIcon: Icon(FontAwesomeIcons.lock),
+            ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: () {
+                //TODO: add forgot password logic
+
+                debugPrint('Forgot Password');
+              },
+              child: Text(
+                'Forgot Password?',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
           ),
           const SizedBox(
             height: 16,
           ),
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              //TODO: add log in logic
+            },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.indigo,
-              foregroundColor: Colors.white,
               minimumSize: const Size(double.infinity, 48),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -64,7 +63,7 @@ class SignInForm extends StatelessWidget {
             icon: const Icon(FontAwesomeIcons.arrowRight),
             label: const Text(
               'Sign In',
-              style: TextStyle(fontFamily: 'Montserrat',fontSize: 16),
+              style: TextStyle(fontFamily: 'Montserrat', fontSize: 16),
             ),
           ),
         ],

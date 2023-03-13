@@ -13,11 +13,11 @@ class BouncingButton extends StatefulWidget {
 class _BouncingButtonState extends State<BouncingButton>
     with SingleTickerProviderStateMixin {
   late Animation<double> _scaleAnimation;
-  late AnimationController _controller;
+  late AnimationController _animationController;
 
   @override
   void initState() {
-    _controller = AnimationController(
+    _animationController = AnimationController(
       vsync: this,
       duration: const Duration(
         milliseconds: 200,
@@ -26,21 +26,24 @@ class _BouncingButtonState extends State<BouncingButton>
         setState(() {});
       });
     _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
-        CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
+        CurvedAnimation(parent: _animationController, curve: Curves.fastOutSlowIn));
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
+    _animationController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: _tapDown,
-      onTapUp: _tapUp,
+      onTap: () async {
+        await _animationController.forward();
+        await _animationController.reverse();
+        widget.onTap();
+      },
       child: Transform.scale(
         scale: _scaleAnimation.value,
         child: Container(
@@ -62,14 +65,5 @@ class _BouncingButtonState extends State<BouncingButton>
         ),
       ),
     );
-  }
-
-  void _tapDown(TapDownDetails details) {
-    _controller.forward();
-  }
-
-  void _tapUp(TapUpDetails details) {
-    _controller.reverse();
-    widget.onTap();
   }
 }

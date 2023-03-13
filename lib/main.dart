@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_b_ui_layout/core/app_theme/app_theme.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'auth/ui/pages/landing_page.dart';
@@ -15,8 +16,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LandingPage(),
+    return MaterialApp(
+      home: const LandingPage(),
+      theme: AppTheme.appTheme.copyWith(
+        colorScheme: ThemeData().colorScheme.copyWith(
+              primary: Colors.indigo,
+            ),
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
