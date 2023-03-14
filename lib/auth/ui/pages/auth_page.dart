@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_b_ui_layout/auth/ui/pages/landing_page.dart';
 
-import '../../../widgets/tasks_screen.dart';
+import '../../../widgets/initial_screen.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -13,7 +13,7 @@ class AuthPage extends StatelessWidget {
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) return const TasksScreen();
+          if (snapshot.hasData) return const InitialScreen();
           debugPrint(snapshot.data.toString());
           return const LandingPage();
         },
