@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_b_ui_layout/domain/model/project.dart';
+import 'package:flutter_b_ui_layout/widgets/log_out_button.dart';
 import 'package:flutter_b_ui_layout/widgets/side_menu_item.dart';
 import 'package:flutter_b_ui_layout/widgets/user_info_card.dart';
 
@@ -59,12 +60,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: 288,
+    return Material(
+
+      child: Container(
+        width: 296,
         height: double.infinity,
         color: const Color.fromARGB(255, 17, 0, 63),
         child: SafeArea(
+          minimum: const EdgeInsets.only(top: 8, left: 8, bottom: 8),
           child: Column(
             children: [
               const UserInfoCard(
@@ -85,17 +88,20 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                 ),
               ),
-              ...widget.projects.map(
-                (project) => SideMenuItem(
-                  project: project,
-                  onTap: () {
-                    setState(() {
-                      selectedProject = project;
-                    });
-                  },
-                  isActive: selectedProject == project,
-                ),
-              ),
+              ListView.separated(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) => SideMenuItem(
+                      project: widget.projects[index],
+                      onTap: () {
+                        setState(() {
+                          selectedProject = widget.projects[index];
+                        });
+                      },
+                      isActive: selectedProject == widget.projects[index]),
+                  separatorBuilder: (context, index) => const SizedBox(),
+                  itemCount: widget.projects.length),
+              const Spacer(),
+              const LogOutButton(),
             ],
           ),
         ),

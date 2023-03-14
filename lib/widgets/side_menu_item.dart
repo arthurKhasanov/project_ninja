@@ -15,59 +15,57 @@ class SideMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 16),
-            child: Divider(
-              color: Colors.white24,
-              height: 1,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 16),
+          child: Divider(
+            color: Colors.white24,
+            height: 1,
+          ),
+        ),
+        Stack(
+          children: [
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.fastOutSlowIn,
+              left: 0,
+              width: isActive ? 280 : 0,
+              child: Container(
+                height: 54,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: const Color.fromARGB(255, 99, 117, 251)),
+              ),
             ),
-          ),
-          Stack(
-            children: [
-              AnimatedPositioned(
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.fastOutSlowIn,
-                left: 0,
-                width: isActive ? 288 : 0,
-                child: Container(
-                  height: 54,
+            ListTile(
+              onTap: onTap,
+              leading: Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: const Color.fromARGB(255, 99, 117, 251)),
-                ),
-              ),
-              ListTile(
-                onTap: onTap,
-                leading: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.circular(
-                        14,
-                      ),
+                    border: Border.all(color: Colors.white),
+                    borderRadius: BorderRadius.circular(
+                      14,
                     ),
-                    height: 28,
-                    width: 28,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.white,
-                        value: _projectProgress(),
-                      ),
-                    )),
-                title: Text(
-                  project.title,
-                  style: const TextStyle(fontSize: 18, color: Colors.white),
-                ),
+                  ),
+                  height: 28,
+                  width: 28,
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                      value: _projectProgress(),
+                    ),
+                  )),
+              title: Text(
+                project.title,
+                style: const TextStyle(fontSize: 18, color: Colors.white),
               ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 

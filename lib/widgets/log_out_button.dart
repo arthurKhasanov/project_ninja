@@ -1,0 +1,69 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+class LogOutButton extends StatefulWidget {
+  const LogOutButton({
+    super.key,
+  });
+
+  @override
+  State<LogOutButton> createState() => _LogOutButtonState();
+}
+
+class _LogOutButtonState extends State<LogOutButton> {
+  bool isActive = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 16),
+          child: Divider(
+            color: Colors.white24,
+            height: 1,
+          ),
+        ),
+        Stack(
+          children: [
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.fastOutSlowIn,
+              left: 0,
+              width: isActive ? 280 : 0,
+              child: Container(
+                height: 54,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: const Color.fromARGB(255, 99, 117, 251)),
+              ),
+            ),
+            ListTile(
+              onTap: () async {
+                setState(() {
+                  isActive = !isActive;
+                });
+                await Future.delayed(const Duration(milliseconds: 200));
+                debugPrint('Log out button pressed');
+                //TODO: add Firebase Auth log out
+                FirebaseAuth.instance.signOut();
+              },
+              leading: const Icon(
+                FontAwesomeIcons.arrowRightFromBracket,
+                color: Colors.white,
+              ),
+              title: const Text(
+                'Log Out',
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
