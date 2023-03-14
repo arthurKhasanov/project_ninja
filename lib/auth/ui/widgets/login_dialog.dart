@@ -47,7 +47,11 @@ class LogInDialog extends StatelessWidget {
             ],
           ),
           const Text(
-            'Or continue with Google account or Apple account',
+            'Don\'t have an account?',
+            style: TextStyle(fontFamily: 'Inter', fontSize: 12),
+          ),
+          const Text(
+            'Sign up with Email or continue with Google account',
             style: TextStyle(fontFamily: 'Inter', fontSize: 12),
           ),
           const SizedBox(
