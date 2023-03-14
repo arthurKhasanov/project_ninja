@@ -59,4 +59,18 @@ class FirebaseAuthRepository implements AuthRepository {
       return const Left(AuthError.error);
     }
   }
+
+  @override
+  Future<AuthError?> restorePassword({
+    required String email,
+  }) async {
+    try {
+      await _firebaseInstance.sendPasswordResetEmail(email: email);
+      return null;
+    } on FirebaseAuthException catch (error) {
+      return AuthExceptionHandler.determineError(error);
+    } catch (e) {
+      return AuthError.error;
+    }
+  }
 }
