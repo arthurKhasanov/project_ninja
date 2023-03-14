@@ -47,7 +47,7 @@ class LogInDialog extends StatelessWidget {
             ],
           ),
           const Text(
-            'Sign up with email or Google account',
+            'Or continue with Google account or Apple account',
             style: TextStyle(fontFamily: 'Inter', fontSize: 12),
           ),
           const SizedBox(
@@ -58,23 +58,23 @@ class LogInDialog extends StatelessWidget {
             children: [
               BouncingWidget(
                 onTap: () {
-                  //TODO: add log in with email logic
-                  debugPrint('Mail');
-                },
-                child: Image.asset(
-                  'assets/icons/auth/mail.png',
-                  width: 35,
-                  height: 35,
-                ),
-              ),
-              BouncingWidget(
-                onTap: () {
                   //TODO: add log in with google logic
 
                   debugPrint('Google');
                 },
                 child: Image.asset(
                   'assets/icons/auth/google.png',
+                  width: 35,
+                  height: 35,
+                ),
+              ),
+              BouncingWidget(
+                onTap: () {
+                  //TODO: add log in with apple logic
+                  debugPrint('Apple');
+                },
+                child: Image.asset(
+                  'assets/icons/auth/mail.png',
                   width: 35,
                   height: 35,
                 ),
