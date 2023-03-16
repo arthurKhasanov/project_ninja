@@ -8,13 +8,11 @@ class AppTheme {
       backgroundColor: Colors.transparent,
       elevation: 0,
     ),
-    textSelectionTheme: const TextSelectionThemeData(
-      cursorColor: Colors.indigo,
-      selectionColor: Colors.indigoAccent,
-    ),
+    // textSelectionTheme: const TextSelectionThemeData(
+    //   cursorColor: Colors.indigo,
+    //   selectionColor: Colors.indigoAccent,
+    // ),
     inputDecorationTheme: InputDecorationTheme(
-      focusColor: Colors.indigo,
-      
       contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       focusedBorder: const OutlineInputBorder(
         borderSide: BorderSide(color: Colors.indigo, width: 1),
@@ -30,8 +28,9 @@ class AppTheme {
       ),
       alignLabelWithHint: true,
       floatingLabelBehavior: FloatingLabelBehavior.never,
-      focusedErrorBorder: const OutlineInputBorder(
-        borderSide: BorderSide(width: 1),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.red[400]!, width: 1),
+        borderRadius: const BorderRadius.all(Radius.circular(14)),
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
