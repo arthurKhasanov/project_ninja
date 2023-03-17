@@ -5,14 +5,14 @@ import 'package:flutter_b_ui_layout/widgets/tasks_screen.dart';
 import 'package:flutter_b_ui_layout/widgets/menu_button.dart';
 import 'package:flutter_b_ui_layout/widgets/custom_drawer.dart';
 
-class InitialScreen extends StatefulWidget {
-  const InitialScreen({super.key});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
   @override
-  State<InitialScreen> createState() => _InitialScreenState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _InitialScreenState extends State<InitialScreen>
+class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
   bool isSideMenuClosed = true;
   late AnimationController animationController;
