@@ -130,11 +130,6 @@ class _SignInFormState extends State<SignInForm> {
             focusNode: _submitFocusNode,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                // context.read<AuthBloc>().add(SignInEvent(
-                //       email: _emailController.text.trim(),
-                //       password: _passwordController.text.trim(),
-                //     ));
-
                 widget.signIn(
                     email: _emailController.text.trim(),
                     password: _passwordController.text.trim());

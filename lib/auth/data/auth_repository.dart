@@ -8,6 +8,15 @@ import '../auth_core/auth_exception_handler.dart';
 class FirebaseAuthRepository implements AuthRepository {
   final FirebaseAuth _firebaseInstance = FirebaseAuth.instance;
 
+  Either<void, User> isUserSignedIn() {
+    final user = _firebaseInstance.currentUser;
+    if (user != null) {
+      return Right(user);
+    } else {
+      return const Left(null);
+    }
+  }
+
   @override
   Future<Either<AuthError, User>> createUserWithEmailAndPassword({
     required String email,
@@ -43,7 +52,7 @@ class FirebaseAuthRepository implements AuthRepository {
 
   @override
   Future<Either<AuthError, User>> signInWithGoogleAccount() async {
-    try {
+    // try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       final GoogleSignInAuthentication googleAuth =
@@ -54,11 +63,11 @@ class FirebaseAuthRepository implements AuthRepository {
           await _firebaseInstance.signInWithCredential(credential);
       if (userCredential.user != null) return Right(userCredential.user!);
       return const Left(AuthError.error);
-    } on FirebaseAuthException catch (error) {
-      return Left(AuthExceptionHandler.determineError(error));
-    } catch (e) {
-      return const Left(AuthError.error);
-    }
+    // } on FirebaseAuthException catch (error) {
+    //   return Left(AuthExceptionHandler.determineError(error));
+    // } catch (e) {
+    //   return const Left(AuthError.error);
+    // }
   }
 
   @override

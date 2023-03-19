@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_b_ui_layout/auth/auth_core/auth_exception_handler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dartz/dartz.dart';
@@ -11,7 +10,8 @@ import 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required AuthRepository authRepository})
       : _authRepository = authRepository,
-        super(InitialState()) {
+        super(UnAuthorizedState()) {
+    isUserSignedIn();
     on<SignInEvent>(_singIn);
     on<SignUpEvent>(_signUp);
     on<ForgotPasswordEvent>(_restorePassword);
@@ -21,12 +21,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   final AuthRepository _authRepository;
 
+  void isUserSignedIn() {
+    final user = _authRepository.isUserSignedIn();
+
+    user.fold(
+      (l) => emit(UnAuthorizedState()),
+      (user) => emit(AuthorizedState(user)),
+    );
+  }
+
   Future<void> _singIn(
     SignInEvent event,
     Emitter<AuthState> emit,
   ) async {
-    emit(LoadingState());
-
     final result = await _authRepository.signInWithEmailAndPassword(
       email: event.email,
       password: event.password,
@@ -38,8 +45,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     SignUpEvent event,
     Emitter<AuthState> emit,
   ) async {
-    emit(LoadingState());
-
     final result = await _authRepository.createUserWithEmailAndPassword(
       email: event.email,
       password: event.password,
@@ -52,18 +57,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     ForgotPasswordEvent event,
     Emitter<AuthState> emit,
   ) async {
-    emit(LoadingState());
-
     final result = await _authRepository.restorePassword(
       email: event.email,
     );
 
     result.fold(
       (error) {
-        emit(ErrorState(message: error.name));
+        emit(UnAuthorizedState(message: error.name));
       },
       (success) {
-        emit(InitialState());
+        emit(UnAuthorizedState());
       },
     );
   }
@@ -72,8 +75,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     GoogleSignUpEvent event,
     Emitter<AuthState> emit,
   ) async {
-    emit(LoadingState());
-
     final result = await _authRepository.signInWithGoogleAccount();
 
     _foldResult(result, emit);
@@ -81,13 +82,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _logOut(LogOutEvent event, Emitter<AuthState> emit) async {
     await _authRepository.logOut();
-    emit(InitialState());
+    emit(UnAuthorizedState());
   }
 
   void _foldResult(Either<AuthError, User> result, Emitter<AuthState> emit) {
     result.fold(
       (error) {
-        emit(ErrorState(message: error.name));
+        emit(UnAuthorizedState(message: error.name));
       },
       (user) {
         emit(AuthorizedState(user));

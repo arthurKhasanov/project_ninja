@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../auth_core/auth_exception_handler.dart';
 
 abstract class AuthRepository {
+  Either<void, User> isUserSignedIn();
+  
   Future<Either<AuthError, User>> signInWithEmailAndPassword({
     required String email,
     required String password,

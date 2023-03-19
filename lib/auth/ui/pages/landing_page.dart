@@ -51,10 +51,7 @@ class LandingPage extends StatelessWidget {
     return BlocProvider<LandingAnimationBloc>(
       create: (context) => LandingAnimationBloc(),
       child: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if (state is ErrorState) {
-          }
-        },
+        listener: (context, state) {},
         child: BlocBuilder<LandingAnimationBloc, bool>(
             builder: (context, isDialogShown) {
           return Scaffold(
