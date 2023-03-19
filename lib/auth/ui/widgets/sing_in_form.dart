@@ -1,6 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../domain/bloc/auth_bloc/auth_bloc.dart';
+import '../../domain/bloc/auth_bloc/auth_event.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({
@@ -9,7 +13,7 @@ class SignInForm extends StatefulWidget {
     required this.resetPassword,
   });
 
-  final VoidCallback signIn;
+  final void Function({required String email, required String password}) signIn;
   final VoidCallback resetPassword;
 
   @override
@@ -25,19 +29,6 @@ class _SignInFormState extends State<SignInForm> {
   late final FocusNode _emailFocusNode;
   late final FocusNode _passwordFocusNode;
   late final FocusNode _submitFocusNode;
-
-  // void _signInWithEmail() async {
-  //   try {
-  //     final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //         email: _emailController.text, password: _passwordController.text);
-  //   } on FirebaseAuthException catch (e) {
-  //     if (e.code == 'user-not-found') {
-  //       print('No user found for that email.');
-  //     } else if (e.code == 'wrong-password') {
-  //       print('Wrong password provided for that user.');
-  //     }
-  //   }
-  // }
 
   @override
   void initState() {
@@ -139,7 +130,14 @@ class _SignInFormState extends State<SignInForm> {
             focusNode: _submitFocusNode,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                widget.signIn();
+                // context.read<AuthBloc>().add(SignInEvent(
+                //       email: _emailController.text.trim(),
+                //       password: _passwordController.text.trim(),
+                //     ));
+
+                widget.signIn(
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text.trim());
               }
             },
             style: ElevatedButton.styleFrom(

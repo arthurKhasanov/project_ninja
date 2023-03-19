@@ -14,8 +14,9 @@ abstract class AuthRepository {
     required String password,
   });
 
-
   Future<Either<AuthError, void>> restorePassword({required String email});
 
   Future<Either<AuthError, User>> signInWithGoogleAccount();
+
+  Future<void> logOut();
 }

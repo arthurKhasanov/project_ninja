@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_bloc.dart';
+import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_event.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LogOutButton extends StatefulWidget {
@@ -47,10 +50,11 @@ class _LogOutButtonState extends State<LogOutButton> {
                 setState(() {
                   isActive = !isActive;
                 });
-                await Future.delayed(const Duration(milliseconds: 200));
-                debugPrint('Log out button pressed');
-                //TODO: add Firebase Auth log out
-                FirebaseAuth.instance.signOut();
+                await Future.delayed(const Duration(milliseconds: 200))
+                    .whenComplete(
+                  () => context.read<AuthBloc>().add(LogOutEvent()),
+                );
+                // context.read<AuthBloc>().add(LogOutEvent());
               },
               leading: const Icon(
                 FontAwesomeIcons.arrowRightFromBracket,
