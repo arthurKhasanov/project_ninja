@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_b_ui_layout/auth/ui/widgets/sign_up_dialog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,27 +12,34 @@ class SignUpInfoBlock extends StatelessWidget {
 
   Future<Object?> _signUp(BuildContext context) {
     final landingAnimationBloc = context.read<LandingAnimationBloc>();
+    final authBloc = context.read<AuthBloc>();
 
     return showGeneralDialog(
-      context: context,
-      barrierDismissible: true,
-      barrierLabel: 'Sign In',
-      barrierColor: Colors.black87,
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
-        final tween =
-            Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
-        return SlideTransition(
-          position: tween.animate(
-            CurvedAnimation(parent: animation, curve: Curves.fastOutSlowIn),
-          ),
-          child: child,
-        );
-      },
-      pageBuilder: (context, _, __) => BlocProvider.value(
-        value: landingAnimationBloc,
-        child: const SignUpDialog(),
-      ),
-    );
+        context: context,
+        barrierDismissible: true,
+        barrierLabel: 'Sign In',
+        barrierColor: Colors.black87,
+        transitionBuilder: (context, animation, secondaryAnimation, child) {
+          final tween =
+              Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
+          return SlideTransition(
+            position: tween.animate(
+              CurvedAnimation(parent: animation, curve: Curves.fastOutSlowIn),
+            ),
+            child: child,
+          );
+        },
+        pageBuilder: (context, _, __) => MultiBlocProvider(
+              providers: [
+                BlocProvider<LandingAnimationBloc>.value(
+                  value: landingAnimationBloc,
+                ),
+                BlocProvider<AuthBloc>.value(
+                  value: authBloc,
+                ),
+              ],
+              child: const SignUpDialog(),
+            ));
   }
 
   @override

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_bloc.dart';
-import 'package:flutter_b_ui_layout/auth/ui/widgets/sign_up_form.dart';
-import 'package:flutter_b_ui_layout/auth/ui/widgets/sign_up_header_info.dart';
+import 'package:flutter_b_ui_layout/auth/ui/widgets/forgot_password_form.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../domain/bloc/auth_bloc/auth_bloc.dart';
 import '../../domain/bloc/auth_bloc/auth_event.dart';
 import '../../domain/bloc/landing_animation_bloc/landing_animation_bloc.dart';
 import '../../domain/bloc/landing_animation_bloc/landing_animation_event.dart';
+import 'forgot_password_header.dart';
 
-class SignUpDialog extends StatelessWidget {
-  const SignUpDialog({super.key});
+class ForgotPasswordDialog extends StatelessWidget {
+  const ForgotPasswordDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +28,12 @@ class SignUpDialog extends StatelessWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SignUpHeaderInfo(),
-            SignUpForm(signUp: ({
+            const ForgotPasswordHeaderInfo(),
+            ForgotPasswordForm(forgotPassword: ({
               required String email,
-              required String password,
             }) {
-              context.read<AuthBloc>().add(SignUpEvent(
-                    email: email,
-                    password: password,
-                  ));
-            }),
+              context.read<AuthBloc>().add(ForgotPasswordEvent(email: email));
+            })
           ],
         ),
       ),

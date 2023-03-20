@@ -1,29 +1,19 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../domain/bloc/auth_bloc/auth_bloc.dart';
-import '../../domain/bloc/auth_bloc/auth_event.dart';
-import '../../domain/bloc/landing_animation_bloc/landing_animation_bloc.dart';
-import '../../domain/bloc/landing_animation_bloc/landing_animation_event.dart';
-import 'forgot_password_dialog.dart';
-
-class SignInForm extends StatefulWidget {
-  const SignInForm({
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({
     super.key,
-    required this.signIn,
-    required this.resetPassword,
+    required this.signUp,
   });
 
-  final void Function({required String email, required String password}) signIn;
-  final VoidCallback resetPassword;
+  final void Function({required String email, required String password}) signUp;
 
   @override
-  State<SignInForm> createState() => _SignInFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _SignUpFormState extends State<SignUpForm> {
   late final GlobalKey<FormState> _formKey;
 
   late final TextEditingController _emailController;
@@ -31,7 +21,6 @@ class _SignInFormState extends State<SignInForm> {
 
   late final FocusNode _emailFocusNode;
   late final FocusNode _passwordFocusNode;
-  late final FocusNode _submitFocusNode;
 
   @override
   void initState() {
@@ -40,7 +29,6 @@ class _SignInFormState extends State<SignInForm> {
     _passwordController = TextEditingController();
     _emailFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
-    _submitFocusNode = FocusNode();
 
     super.initState();
   }
@@ -51,40 +39,7 @@ class _SignInFormState extends State<SignInForm> {
     _passwordController.dispose();
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
-    _submitFocusNode.dispose();
     super.dispose();
-  }
-
-  Future<Object?> _resetPassword(BuildContext context) {
-    final authBloc = context.read<AuthBloc>();
-    final landingAnimationBloc = context.read<LandingAnimationBloc>();
-
-    return showGeneralDialog(
-        context: context,
-        barrierDismissible: true,
-        barrierLabel: 'Sign In',
-        barrierColor: Colors.black87,
-        transitionBuilder: (context, animation, secondaryAnimation, child) {
-          final tween =
-              Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
-          return SlideTransition(
-            position: tween.animate(
-              CurvedAnimation(parent: animation, curve: Curves.fastOutSlowIn),
-            ),
-            child: child,
-          );
-        },
-        pageBuilder: (context, _, __) => MultiBlocProvider(
-              providers: [
-                BlocProvider<LandingAnimationBloc>.value(
-                  value: landingAnimationBloc,
-                ),
-                BlocProvider<AuthBloc>.value(
-                  value: authBloc,
-                ),
-              ],
-              child: const ForgotPasswordDialog(),
-            ));
   }
 
   String? _validateEmail(String? value) {
@@ -101,6 +56,9 @@ class _SignInFormState extends State<SignInForm> {
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your password';
+    }
+    if (value.length < 6) {
+      return 'Password must be at least 6 characters';
     }
     return null;
   }
@@ -145,32 +103,12 @@ class _SignInFormState extends State<SignInForm> {
             },
           ),
           const SizedBox(
-            height: 8,
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: GestureDetector(
-              onTap: widget.resetPassword,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                  _resetPassword(context);
-                },
-                child: Text(
-                  'Forgot Password?',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
             height: 16,
           ),
           ElevatedButton.icon(
-            focusNode: _submitFocusNode,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                widget.signIn(
+                widget.signUp(
                     email: _emailController.text.trim(),
                     password: _passwordController.text.trim());
               }
@@ -179,16 +117,16 @@ class _SignInFormState extends State<SignInForm> {
               minimumSize: const Size(double.infinity, 48),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
-                  bottomLeft: Radius.circular(4),
-                  bottomRight: Radius.circular(4),
+                  topLeft: Radius.circular(4),
+                  topRight: Radius.circular(4),
+                  bottomLeft: Radius.circular(16),
+                  bottomRight: Radius.circular(16),
                 ),
               ),
             ),
             icon: const Icon(FontAwesomeIcons.arrowRight),
             label: const Text(
-              'Sign In',
+              'Sign Up',
               style: TextStyle(fontFamily: 'Montserrat', fontSize: 16),
             ),
           ),

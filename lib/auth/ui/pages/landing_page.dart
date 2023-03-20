@@ -5,7 +5,6 @@ import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_state.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/landing_animation_bloc/landing_animation_bloc.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/landing_animation_bloc/landing_animation_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:overlay_support/overlay_support.dart';
 import 'package:rive/rive.dart';
 import '../widgets/bouncing_button.dart';
 import '../widgets/sign_in_dialog.dart';
