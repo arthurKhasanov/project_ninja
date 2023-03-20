@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../domain/bloc/auth_bloc/auth_bloc.dart';
-import '../../domain/bloc/auth_bloc/auth_event.dart';
-import '../../domain/bloc/landing_animation_bloc/landing_animation_bloc.dart';
-import '../../domain/bloc/landing_animation_bloc/landing_animation_event.dart';
-import 'forgot_password_dialog.dart';
+import '../../../domain/bloc/auth_bloc/auth_bloc.dart';
+import '../../../domain/bloc/landing_animation_bloc/landing_animation_bloc.dart';
+import '../forgot_password_dialog/forgot_password_dialog.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({

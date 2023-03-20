@@ -7,7 +7,7 @@ import 'package:flutter_b_ui_layout/auth/domain/bloc/landing_animation_bloc/land
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rive/rive.dart';
 import '../widgets/bouncing_button.dart';
-import '../widgets/sign_in_dialog.dart';
+import '../widgets/sign_in_dialog/sign_in_dialog.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});

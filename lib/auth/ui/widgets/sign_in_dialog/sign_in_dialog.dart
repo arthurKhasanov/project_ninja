@@ -3,13 +3,13 @@ import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_bloc.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_event.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/landing_animation_bloc/landing_animation_bloc.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/landing_animation_bloc/landing_animation_event.dart';
-import 'package:flutter_b_ui_layout/auth/ui/widgets/sign_in_header_info.dart';
-import 'package:flutter_b_ui_layout/auth/ui/widgets/sign_up_info_block.dart';
-import 'package:flutter_b_ui_layout/auth/ui/widgets/sing_in_form.dart';
+import 'package:flutter_b_ui_layout/auth/ui/widgets/sign_in_dialog/sign_in_header_info.dart';
+import 'package:flutter_b_ui_layout/auth/ui/widgets/sign_in_dialog/sing_in_form.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/bloc/auth_bloc/auth_state.dart';
-import 'log_in_dialog_divider.dart';
+import '../../../domain/bloc/auth_bloc/auth_state.dart';
+import '../log_in_dialog_divider.dart';
+import '../sign_up_dialog/sign_up_info_block.dart';
 
 class SignInDialog extends StatelessWidget {
   const SignInDialog({

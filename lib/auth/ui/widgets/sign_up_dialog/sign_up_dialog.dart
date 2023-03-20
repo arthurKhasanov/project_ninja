@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_bloc.dart';
-import 'package:flutter_b_ui_layout/auth/ui/widgets/sign_up_form.dart';
-import 'package:flutter_b_ui_layout/auth/ui/widgets/sign_up_header_info.dart';
+import 'package:flutter_b_ui_layout/auth/ui/widgets/sign_up_dialog/sign_up_form.dart';
+import 'package:flutter_b_ui_layout/auth/ui/widgets/sign_up_dialog/sign_up_header_info.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/bloc/auth_bloc/auth_event.dart';
-import '../../domain/bloc/landing_animation_bloc/landing_animation_bloc.dart';
-import '../../domain/bloc/landing_animation_bloc/landing_animation_event.dart';
+import '../../../domain/bloc/auth_bloc/auth_event.dart';
+import '../../../domain/bloc/landing_animation_bloc/landing_animation_bloc.dart';
+import '../../../domain/bloc/landing_animation_bloc/landing_animation_event.dart';
 
 class SignUpDialog extends StatelessWidget {
   const SignUpDialog({super.key});

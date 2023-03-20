@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_b_ui_layout/auth/ui/widgets/forgot_password_form.dart';
+import 'package:flutter_b_ui_layout/auth/ui/widgets/forgot_password_dialog/forgot_password_form.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/bloc/auth_bloc/auth_bloc.dart';
-import '../../domain/bloc/auth_bloc/auth_event.dart';
-import '../../domain/bloc/landing_animation_bloc/landing_animation_bloc.dart';
-import '../../domain/bloc/landing_animation_bloc/landing_animation_event.dart';
+import '../../../domain/bloc/auth_bloc/auth_bloc.dart';
+import '../../../domain/bloc/auth_bloc/auth_event.dart';
+import '../../../domain/bloc/landing_animation_bloc/landing_animation_bloc.dart';
+import '../../../domain/bloc/landing_animation_bloc/landing_animation_event.dart';
 import 'forgot_password_header.dart';
 
 class ForgotPasswordDialog extends StatelessWidget {
