@@ -60,6 +60,9 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is UnAuthorizedState) {
+          
+          if (state.message == null) return;
+
           switch (state.message) {
             case 'invalidEmail':
               firebaseAnswer = 'Please enter a valid email address';
@@ -70,7 +73,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
             case 'userNotFound':
               firebaseAnswer = 'User with this email doesn\'t exist';
               break;
-            case 'error':
+            default:
               firebaseAnswer = 'Error';
               break;
           }
