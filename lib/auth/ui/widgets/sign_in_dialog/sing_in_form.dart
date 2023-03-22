@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rive/rive.dart';
 
 import '../../../domain/bloc/auth_bloc/auth_bloc.dart';
 import '../../../domain/bloc/auth_bloc/auth_state.dart';
 import '../../../domain/bloc/landing_animation_bloc/landing_animation_bloc.dart';
+import '../custom_positioned_widget.dart';
 import '../forgot_password_dialog/forgot_password_dialog.dart';
 
 class SignInForm extends StatefulWidget {
-  const SignInForm({
-    super.key,
-    required this.signIn,
-    required this.resetPassword,
-  });
-
-  final void Function({required String email, required String password}) signIn;
-  final VoidCallback resetPassword;
+  const SignInForm({super.key});
 
   @override
   State<SignInForm> createState() => _SignInFormState();
@@ -33,6 +29,19 @@ class _SignInFormState extends State<SignInForm> {
 
   String? firebaseEmailAnswer;
   String? firebasePasswordAnswer;
+
+  late SMITrigger check;
+  late SMITrigger error;
+  late SMITrigger reset;
+
+  bool isLoadingAnimationOnScreen = false;
+
+  StateMachineController getRiveController(Artboard artboard) {
+    StateMachineController? controller =
+        StateMachineController.fromArtboard(artboard, 'State Machine 1');
+    artboard.addController(controller!);
+    return controller;
+  }
 
   @override
   void initState() {
@@ -96,24 +105,34 @@ class _SignInFormState extends State<SignInForm> {
     if (!emailRegExp.hasMatch(value)) {
       return 'Please enter a valid email address';
     }
-    return null;
+    return firebaseEmailAnswer;
   }
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your password';
     }
-    return null;
+    return firebasePasswordAnswer;
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is UnAuthorizedState) {
-
+          debugPrint(state.message);
           if (state.message == null) return;
-          
+
+          error.fire();
+
+          await Future.delayed(const Duration(seconds: 2)).whenComplete(
+            () {
+              setState(
+                () => isLoadingAnimationOnScreen = false,
+              );
+            },
+          );
+
           switch (state.message) {
             case 'invalidEmail':
               firebaseEmailAnswer = 'Please enter a valid email address';
@@ -138,98 +157,134 @@ class _SignInFormState extends State<SignInForm> {
               firebasePasswordAnswer = 'Error';
               break;
           }
-        } else {
+
+          _formKey.currentState!.validate();
           firebaseEmailAnswer = null;
           firebasePasswordAnswer = null;
+        } else {
+          check.fire();
+
+          await Future.delayed(const Duration(seconds: 2)).whenComplete(
+            () {
+              setState(
+                () => isLoadingAnimationOnScreen = false,
+              );
+              firebaseEmailAnswer = null;
+              firebasePasswordAnswer = null;
+              Navigator.pop(context);
+            },
+          );
         }
       },
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            TextFormField(
-              controller: _emailController,
-              focusNode: _emailFocusNode,
-              textInputAction: TextInputAction.next,
-              validator: _validateEmail,
-              decoration: const InputDecoration(
-                hintText: 'Email',
-                prefixIcon: Icon(FontAwesomeIcons.envelope),
-              ),
-              onFieldSubmitted: (value) {
-                _emailFocusNode.unfocus();
-                _passwordFocusNode.requestFocus();
-              },
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            TextFormField(
-              controller: _passwordController,
-              focusNode: _passwordFocusNode,
-              obscureText: true,
-              textInputAction: TextInputAction.done,
-              validator: _validatePassword,
-              decoration: const InputDecoration(
-                hintText: 'Password',
-                prefixIcon: Icon(
-                  FontAwesomeIcons.lock,
-                ),
-              ),
-              onFieldSubmitted: (value) {
-                _passwordFocusNode.unfocus();
-              },
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-                onTap: widget.resetPassword,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                    _resetPassword(context);
+      child: Stack(
+        children: [
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _emailController,
+                  focusNode: _emailFocusNode,
+                  textInputAction: TextInputAction.next,
+                  validator: _validateEmail,
+                  decoration: const InputDecoration(
+                    hintText: 'Email',
+                    prefixIcon: Icon(FontAwesomeIcons.envelope),
+                  ),
+                  onFieldSubmitted: (value) {
+                    _emailFocusNode.unfocus();
+                    _passwordFocusNode.requestFocus();
                   },
-                  child: Text(
-                    'Forgot Password?',
-                    style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                TextFormField(
+                  controller: _passwordController,
+                  focusNode: _passwordFocusNode,
+                  obscureText: true,
+                  textInputAction: TextInputAction.done,
+                  validator: _validatePassword,
+                  decoration: const InputDecoration(
+                    hintText: 'Password',
+                    prefixIcon: Icon(
+                      FontAwesomeIcons.lock,
+                    ),
+                  ),
+                  onFieldSubmitted: (value) {
+                    _passwordFocusNode.unfocus();
+                  },
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                      _resetPassword(context);
+                    },
+                    child: Text(
+                      'Forgot Password?',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            ElevatedButton.icon(
-              focusNode: _submitFocusNode,
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  widget.signIn(
-                      email: _emailController.text.trim(),
-                      password: _passwordController.text.trim());
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 48),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
-                    bottomLeft: Radius.circular(4),
-                    bottomRight: Radius.circular(4),
+                const SizedBox(
+                  height: 16,
+                ),
+                ElevatedButton.icon(
+                  focusNode: _submitFocusNode,
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      setState(
+                        () => isLoadingAnimationOnScreen = true,
+                      );
+
+                      context.read<AuthBloc>().add(
+                            SignInEvent(
+                              email: _emailController.text.trim(),
+                              password: _passwordController.text.trim(),
+                            ),
+                          );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 48),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        topRight: Radius.circular(16),
+                        bottomLeft: Radius.circular(4),
+                        bottomRight: Radius.circular(4),
+                      ),
+                    ),
+                  ),
+                  icon: const Icon(FontAwesomeIcons.arrowRight),
+                  label: const Text(
+                    'Sign In',
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 16),
                   ),
                 ),
-              ),
-              icon: const Icon(FontAwesomeIcons.arrowRight),
-              label: const Text(
-                'Sign In',
-                style: TextStyle(fontFamily: 'Montserrat', fontSize: 16),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+          isLoadingAnimationOnScreen
+              ? CustomPositionedWidget(
+                  child: RiveAnimation.asset(
+                    'assets/rive_animations/auth/loading.riv',
+                    onInit: (artboard) {
+                      final StateMachineController controller =
+                          getRiveController(artboard);
+                      check = controller.findSMI('Check') as SMITrigger;
+                      error = controller.findSMI('Error') as SMITrigger;
+                      reset = controller.findSMI('Reset') as SMITrigger;
+                    },
+                  ),
+                )
+              : const SizedBox(),
+        ],
       ),
     );
   }

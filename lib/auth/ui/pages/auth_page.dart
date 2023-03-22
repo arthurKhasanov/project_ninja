@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_b_ui_layout/auth/ui/pages/landing_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../widgets/main_screen.dart';
-import '../../data/auth_repository.dart';
+import '../../data/firebase_auth_repository.dart';
 import '../../domain/bloc/auth_bloc/auth_bloc.dart';
 import '../../domain/bloc/auth_bloc/auth_state.dart';
 
@@ -25,14 +24,6 @@ class InitialPage extends StatelessWidget {
           }
         },
       ),
-
-      //  StreamBuilder<User?>(
-      //   stream: FirebaseAuth.instance.authStateChanges(),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.hasData) return const MainPage();
-      //     return const LandingPage();
-      //   },
-      // ),
     );
   }
 }

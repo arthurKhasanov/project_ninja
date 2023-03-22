@@ -76,6 +76,7 @@ class SignUpInfoBlock extends StatelessWidget {
             BouncingWidget(
               onTap: () {
                 context.read<AuthBloc>().add(GoogleSignUpEvent());
+                Navigator.pop(context);
               },
               child: Image.asset(
                 'assets/icons/auth/google.png',

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_bloc.dart';
-import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_event.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/landing_animation_bloc/landing_animation_bloc.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/landing_animation_bloc/landing_animation_event.dart';
 import 'package:flutter_b_ui_layout/auth/ui/widgets/sign_in_dialog/sign_in_header_info.dart';
 import 'package:flutter_b_ui_layout/auth/ui/widgets/sign_in_dialog/sing_in_form.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/bloc/auth_bloc/auth_state.dart';
 import '../log_in_dialog_divider.dart';
 import '../sign_up_dialog/sign_up_info_block.dart';
 
@@ -18,47 +15,26 @@ class SignInDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
-        if (state is AuthorizedState) {
-          Navigator.pop(context);
-        }
+    return WillPopScope(
+      onWillPop: () async {
+        context.read<LandingAnimationBloc>().add(AuthCanceled());
+        return true;
       },
-      child: WillPopScope(
-        onWillPop: () async {
-          context.read<LandingAnimationBloc>().add(AuthCanceled());
-          return true;
-        },
-        child: AlertDialog(
-          scrollable: true,
-          clipBehavior: Clip.hardEdge,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
-          backgroundColor: Colors.white.withOpacity(0.95),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SignInHeaderInfo(),
-              SignInForm(
-                signIn: ({
-                  required String email,
-                  required String password,
-                }) {
-                  context.read<AuthBloc>().add(
-                        SignInEvent(
-                          email: email,
-                          password: password,
-                        ),
-                      );
-                },
-                resetPassword: () {},
-              ),
-              const LogInDialogDivider(),
-              const SignUpInfoBlock(),
-            ],
-          ),
+      child: AlertDialog(
+        scrollable: true,
+        clipBehavior: Clip.hardEdge,
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+        backgroundColor: Colors.white.withOpacity(0.95),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            SignInHeaderInfo(),
+            SignInForm(),
+            LogInDialogDivider(),
+            SignUpInfoBlock(),
+          ],
         ),
       ),
     );

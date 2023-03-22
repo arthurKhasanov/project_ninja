@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_event.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,10 +9,7 @@ import '../../../domain/bloc/auth_bloc/auth_bloc.dart';
 class ForgotPasswordForm extends StatefulWidget {
   const ForgotPasswordForm({
     super.key,
-    required this.forgotPassword,
   });
-
-  final void Function({required String email}) forgotPassword;
 
   @override
   State<ForgotPasswordForm> createState() => _ForgotPasswordFormState();
@@ -60,7 +58,6 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is UnAuthorizedState) {
-          
           if (state.message == null) return;
 
           switch (state.message) {
@@ -107,9 +104,11 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
             ElevatedButton.icon(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  widget.forgotPassword(
-                    email: _emailController.text.trim(),
-                  );
+                  context.read<AuthBloc>().add(
+                        ForgotPasswordEvent(
+                          email: _emailController.text.trim(),
+                        ),
+                      );
                 }
               },
               style: ElevatedButton.styleFrom(

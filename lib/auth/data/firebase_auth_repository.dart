@@ -8,6 +8,7 @@ import '../auth_core/auth_exception_handler.dart';
 class FirebaseAuthRepository implements AuthRepository {
   final FirebaseAuth _firebaseInstance = FirebaseAuth.instance;
 
+  @override
   Either<void, User> isUserSignedIn() {
     final user = _firebaseInstance.currentUser;
     if (user != null) {
