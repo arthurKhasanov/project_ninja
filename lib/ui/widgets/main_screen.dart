@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_b_ui_layout/widgets/tasks_screen.dart';
-import 'package:flutter_b_ui_layout/widgets/menu_button.dart';
-import 'package:flutter_b_ui_layout/widgets/custom_drawer.dart';
+import 'package:flutter_b_ui_layout/ui/widgets/tasks_screen.dart';
+import 'package:flutter_b_ui_layout/ui/widgets/menu_button.dart';
+import 'package:flutter_b_ui_layout/ui/widgets/custom_drawer.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

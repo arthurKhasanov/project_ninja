@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_b_ui_layout/auth/ui/pages/landing_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../widgets/main_screen.dart';
+import '../../../ui/widgets/main_screen.dart';
 import '../../data/firebase_auth_repository.dart';
 import '../../domain/bloc/auth_bloc/auth_bloc.dart';
 import '../../domain/bloc/auth_bloc/auth_state.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_b_ui_layout/domain/model/project.dart';
-import 'package:flutter_b_ui_layout/widgets/log_out_button.dart';
-import 'package:flutter_b_ui_layout/widgets/side_menu_item.dart';
-import 'package:flutter_b_ui_layout/widgets/user_info_card.dart';
+import 'package:flutter_b_ui_layout/ui/widgets/log_out_button.dart';
+import 'package:flutter_b_ui_layout/ui/widgets/side_menu_item.dart';
+import 'package:flutter_b_ui_layout/ui/widgets/user_info_card.dart';
 
-import '../domain/model/task.dart';
+import '../../domain/model/task.dart';
 
 class CustomDrawer extends StatefulWidget {
   CustomDrawer({super.key});
