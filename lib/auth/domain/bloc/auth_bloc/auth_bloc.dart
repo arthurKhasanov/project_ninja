@@ -66,7 +66,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(UnAuthorizedState(message: error.name));
       },
       (success) {
-        emit(UnAuthorizedState());
+        emit(UnAuthorizedState(message: 'restore email'));
       },
     );
   }

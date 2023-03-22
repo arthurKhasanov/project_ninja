@@ -25,7 +25,10 @@ class ForgotPasswordDialog extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
-          children: const [ForgotPasswordHeaderInfo(), ForgotPasswordForm()],
+          children: const [
+            ForgotPasswordHeaderInfo(),
+            ForgotPasswordForm(),
+          ],
         ),
       ),
     );

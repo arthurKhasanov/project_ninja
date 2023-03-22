@@ -27,16 +27,15 @@ class _SignInFormState extends State<SignInForm> {
   late final FocusNode _passwordFocusNode;
   late final FocusNode _submitFocusNode;
 
-  String? firebaseEmailAnswer;
-  String? firebasePasswordAnswer;
+  String? _firebaseEmailAnswer;
+  String? _firebasePasswordAnswer;
 
-  late SMITrigger check;
-  late SMITrigger error;
-  late SMITrigger reset;
+  late SMITrigger _check;
+  late SMITrigger _error;
 
-  bool isLoadingAnimationOnScreen = false;
+  bool _isLoadingAnimationOnScreen = false;
 
-  StateMachineController getRiveController(Artboard artboard) {
+  StateMachineController _getRiveController(Artboard artboard) {
     StateMachineController? controller =
         StateMachineController.fromArtboard(artboard, 'State Machine 1');
     artboard.addController(controller!);
@@ -105,72 +104,75 @@ class _SignInFormState extends State<SignInForm> {
     if (!emailRegExp.hasMatch(value)) {
       return 'Please enter a valid email address';
     }
-    return firebaseEmailAnswer;
+    return _firebaseEmailAnswer;
   }
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your password';
     }
-    return firebasePasswordAnswer;
+    return _firebasePasswordAnswer;
+  }
+
+  void _addMessageToValidationAnswer(String message) {
+    switch (message) {
+      case 'invalidEmail':
+        _firebaseEmailAnswer = 'Please enter a valid email address';
+        break;
+      case 'userDisabled':
+        _firebaseEmailAnswer = 'User disabled';
+        break;
+      case 'userNotFound':
+        _firebaseEmailAnswer = 'User with this email doesn\'t exist';
+        break;
+      case 'wrongPassword':
+        _firebasePasswordAnswer = 'Wrong password';
+        break;
+      case 'emailAlreadyInUse':
+        _firebaseEmailAnswer = 'Email already in use';
+        break;
+      case 'weakPassword':
+        _firebaseEmailAnswer = 'Password must contain at least 6 characters';
+        break;
+      default:
+        _firebasePasswordAnswer = 'Error';
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
+
         if (state is UnAuthorizedState) {
-          debugPrint(state.message);
           if (state.message == null) return;
 
-          error.fire();
+          _error.fire();
 
           await Future.delayed(const Duration(seconds: 2)).whenComplete(
             () {
               setState(
-                () => isLoadingAnimationOnScreen = false,
+                () => _isLoadingAnimationOnScreen = false,
               );
             },
           );
 
-          switch (state.message) {
-            case 'invalidEmail':
-              firebaseEmailAnswer = 'Please enter a valid email address';
-              break;
-            case 'userDisabled':
-              firebaseEmailAnswer = 'User disabled';
-              break;
-            case 'userNotFound':
-              firebaseEmailAnswer = 'User with this email doesn\'t exist';
-              break;
-            case 'wrongPassword':
-              firebasePasswordAnswer = 'Wrong password';
-              break;
-            case 'emailAlreadyInUse':
-              firebaseEmailAnswer = 'Email already in use';
-              break;
-            case 'weakPassword':
-              firebaseEmailAnswer =
-                  'Password must contain at least 6 characters';
-              break;
-            default:
-              firebasePasswordAnswer = 'Error';
-              break;
-          }
+          _addMessageToValidationAnswer(state.message!);
 
           _formKey.currentState!.validate();
-          firebaseEmailAnswer = null;
-          firebasePasswordAnswer = null;
+          _firebaseEmailAnswer = null;
+          _firebasePasswordAnswer = null;
         } else {
-          check.fire();
+          _check.fire();
 
           await Future.delayed(const Duration(seconds: 2)).whenComplete(
             () {
               setState(
-                () => isLoadingAnimationOnScreen = false,
+                () => _isLoadingAnimationOnScreen = false,
               );
-              firebaseEmailAnswer = null;
-              firebasePasswordAnswer = null;
+              _firebaseEmailAnswer = null;
+              _firebasePasswordAnswer = null;
               Navigator.pop(context);
             },
           );
@@ -239,7 +241,7 @@ class _SignInFormState extends State<SignInForm> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       setState(
-                        () => isLoadingAnimationOnScreen = true,
+                        () => _isLoadingAnimationOnScreen = true,
                       );
 
                       context.read<AuthBloc>().add(
@@ -270,16 +272,15 @@ class _SignInFormState extends State<SignInForm> {
               ],
             ),
           ),
-          isLoadingAnimationOnScreen
+          _isLoadingAnimationOnScreen
               ? CustomPositionedWidget(
                   child: RiveAnimation.asset(
                     'assets/rive_animations/auth/loading.riv',
                     onInit: (artboard) {
                       final StateMachineController controller =
-                          getRiveController(artboard);
-                      check = controller.findSMI('Check') as SMITrigger;
-                      error = controller.findSMI('Error') as SMITrigger;
-                      reset = controller.findSMI('Reset') as SMITrigger;
+                          _getRiveController(artboard);
+                      _check = controller.findSMI('Check') as SMITrigger;
+                      _error = controller.findSMI('Error') as SMITrigger;
                     },
                   ),
                 )
