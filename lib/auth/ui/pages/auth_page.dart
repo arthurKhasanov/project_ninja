@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_b_ui_layout/auth/ui/pages/landing_page.dart';
+import 'package:flutter_b_ui_layout/ui/routes/app_routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../ui/widgets/main_screen.dart';
 import '../../data/firebase_auth_repository.dart';
@@ -17,11 +20,16 @@ class InitialPage extends StatelessWidget {
       create: (context) => AuthBloc(authRepository: FirebaseAuthRepository()),
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
-          if (state is AuthorizedState) {
-            return const MainPage();
-          } else {
-            return const LandingPage();
-          }
+          SchedulerBinding.instance.addPostFrameCallback(
+            (timeStamp) {
+              if (state is AuthorizedState) {
+                context.goNamed(AppPages.todos.name);
+              } else {
+                context.goNamed(AppPages.auth.name);
+              }
+            },
+          );
+          return const SizedBox();
         },
       ),
     );
