@@ -11,6 +11,7 @@ enum AppPages {
   root('root', '/'),
   todos('todos', '/todos'),
   auth('auth', '/auth');
+  
 
   const AppPages(this.name, this.path);
 
