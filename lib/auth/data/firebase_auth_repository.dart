@@ -1,12 +1,23 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_b_ui_layout/auth/domain/auth_repository.dart/auth_repository.dart';
+import 'package:flutter_b_ui_layout/core/network_checker/network_checker.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../auth_core/auth_exception_handler.dart';
 
 class FirebaseAuthRepository implements AuthRepository {
-  final FirebaseAuth _firebaseInstance = FirebaseAuth.instance;
+  FirebaseAuthRepository(
+      {required FirebaseAuth firebaseAuthInstance,
+      required NetworkChecker networkChecker})
+      : _firebaseInstance = firebaseAuthInstance,
+        _networkChecker = networkChecker;
+
+  final FirebaseAuth _firebaseInstance;
+  final NetworkChecker _networkChecker;
 
   @override
   Either<void, User> isUserSignedIn() {
@@ -30,6 +41,9 @@ class FirebaseAuthRepository implements AuthRepository {
       return const Left(AuthError.error);
     } on FirebaseAuthException catch (error) {
       return Left(AuthExceptionHandler.determineError(error));
+    } on SocketException catch (_) {
+      //TODO: replace with class Error
+      return Left(AuthError.error);
     } catch (e) {
       return const Left(AuthError.error);
     }
@@ -53,22 +67,16 @@ class FirebaseAuthRepository implements AuthRepository {
 
   @override
   Future<Either<AuthError, User>> signInWithGoogleAccount() async {
-    // try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser!.authentication;
-      final credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-      final UserCredential userCredential =
-          await _firebaseInstance.signInWithCredential(credential);
-      if (userCredential.user != null) return Right(userCredential.user!);
-      return const Left(AuthError.error);
-    // } on FirebaseAuthException catch (error) {
-    //   return Left(AuthExceptionHandler.determineError(error));
-    // } catch (e) {
-    //   return const Left(AuthError.error);
-    // }
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser!.authentication;
+    final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+    final UserCredential userCredential =
+        await _firebaseInstance.signInWithCredential(credential);
+    if (userCredential.user != null) return Right(userCredential.user!);
+    return const Left(AuthError.error);
   }
 
   @override

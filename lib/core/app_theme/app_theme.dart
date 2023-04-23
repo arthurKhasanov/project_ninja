@@ -8,10 +8,6 @@ class AppTheme {
       backgroundColor: Colors.transparent,
       elevation: 0,
     ),
-    // textSelectionTheme: const TextSelectionThemeData(
-    //   cursorColor: Colors.indigo,
-    //   selectionColor: Colors.indigoAccent,
-    // ),
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       focusedBorder: const OutlineInputBorder(

@@ -4,6 +4,7 @@ import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_bloc.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_state.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/landing_animation_bloc/landing_animation_bloc.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/landing_animation_bloc/landing_animation_event.dart';
+import 'package:flutter_b_ui_layout/core/dependency_injection/service_locator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rive/rive.dart';
 import '../widgets/bouncing_button.dart';
@@ -13,9 +14,9 @@ class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
 
   Future<Object?> _startAuth(BuildContext context) {
-    final authBloc = context.read<AuthBloc>();
-    final landingAnimationBloc = context.read<LandingAnimationBloc>()
-      ..add(AuthStarted());
+    final AuthBloc authBloc = context.read<AuthBloc>();
+    final LandingAnimationBloc landingAnimationBloc =
+        context.read<LandingAnimationBloc>()..add(AuthStarted());
 
     return showGeneralDialog(
         context: context,
@@ -47,8 +48,15 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<LandingAnimationBloc>(
-      create: (context) => LandingAnimationBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LandingAnimationBloc>(
+          create: (context) => LandingAnimationBloc(),
+        ),
+        BlocProvider.value(
+          value: locator<AuthBloc>(),
+        )
+      ],
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {},
         child: BlocBuilder<LandingAnimationBloc, bool>(

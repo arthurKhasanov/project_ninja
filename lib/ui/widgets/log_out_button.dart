@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_bloc.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_event.dart';
+import 'package:flutter_b_ui_layout/core/dependency_injection/service_locator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -49,9 +50,9 @@ class _LogOutButtonState extends State<LogOutButton> {
                 });
                 await Future.delayed(const Duration(milliseconds: 200))
                     .whenComplete(
-                  () => context.read<AuthBloc>().add(LogOutEvent()),
+                  () => 
+                  locator<AuthBloc>().add(LogOutEvent()),
                 );
-                // context.read<AuthBloc>().add(LogOutEvent());
               },
               leading: const Icon(
                 FontAwesomeIcons.arrowRightFromBracket,
