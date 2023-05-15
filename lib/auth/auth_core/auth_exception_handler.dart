@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthExceptionHandler {
+
+  
   static AuthError determineError(FirebaseAuthException exception) {
     switch (exception.code) {
       case 'invalid-email':

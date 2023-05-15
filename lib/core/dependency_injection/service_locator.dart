@@ -18,5 +18,6 @@ void initDependencies() {
   locator.registerLazySingleton<AuthRepository>(() => FirebaseAuthRepository(
       firebaseAuthInstance: locator(), networkChecker: locator()));
 
-  locator.registerSingleton<AuthBloc>(AuthBloc(authRepository: locator()));
+  locator.registerLazySingleton<AuthBloc>(
+      () => AuthBloc(authRepository: locator()));
 }
