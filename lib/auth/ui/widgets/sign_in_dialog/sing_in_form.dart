@@ -36,8 +36,7 @@ class _SignInFormState extends State<SignInForm> {
   bool _isLoadingAnimationOnScreen = false;
 
   StateMachineController _getRiveController(Artboard artboard) {
-    StateMachineController? controller =
-        StateMachineController.fromArtboard(artboard, 'State Machine 1');
+    StateMachineController? controller = StateMachineController.fromArtboard(artboard, 'State Machine 1');
     artboard.addController(controller!);
     return controller;
   }
@@ -74,8 +73,7 @@ class _SignInFormState extends State<SignInForm> {
         barrierLabel: 'Sign In',
         barrierColor: Colors.black87,
         transitionBuilder: (context, animation, secondaryAnimation, child) {
-          final tween =
-              Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
+          final tween = Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
           return SlideTransition(
             position: tween.animate(
               CurvedAnimation(parent: animation, curve: Curves.fastOutSlowIn),
@@ -83,15 +81,8 @@ class _SignInFormState extends State<SignInForm> {
             child: child,
           );
         },
-        pageBuilder: (context, _, __) => MultiBlocProvider(
-              providers: [
-                BlocProvider<LandingAnimationBloc>.value(
-                  value: landingAnimationBloc,
-                ),
-                BlocProvider<AuthBloc>.value(
-                  value: authBloc,
-                ),
-              ],
+        pageBuilder: (context, _, __) => BlocProvider<LandingAnimationBloc>.value(
+              value: landingAnimationBloc,
               child: const ForgotPasswordDialog(),
             ));
   }
@@ -144,7 +135,6 @@ class _SignInFormState extends State<SignInForm> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
-
         if (state is UnAuthorizedState) {
           if (state.message == null) return;
 
@@ -277,8 +267,7 @@ class _SignInFormState extends State<SignInForm> {
                   child: RiveAnimation.asset(
                     'assets/rive_animations/auth/loading.riv',
                     onInit: (artboard) {
-                      final StateMachineController controller =
-                          _getRiveController(artboard);
+                      final StateMachineController controller = _getRiveController(artboard);
                       _check = controller.findSMI('Check') as SMITrigger;
                       _error = controller.findSMI('Error') as SMITrigger;
                     },

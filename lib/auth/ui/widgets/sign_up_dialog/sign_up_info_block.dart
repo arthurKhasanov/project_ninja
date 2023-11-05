@@ -20,8 +20,7 @@ class SignUpInfoBlock extends StatelessWidget {
         barrierLabel: 'Sign In',
         barrierColor: Colors.black87,
         transitionBuilder: (context, animation, secondaryAnimation, child) {
-          final tween =
-              Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
+          final tween = Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
           return SlideTransition(
             position: tween.animate(
               CurvedAnimation(parent: animation, curve: Curves.fastOutSlowIn),
@@ -29,15 +28,8 @@ class SignUpInfoBlock extends StatelessWidget {
             child: child,
           );
         },
-        pageBuilder: (context, _, __) => MultiBlocProvider(
-              providers: [
-                BlocProvider<LandingAnimationBloc>.value(
-                  value: landingAnimationBloc,
-                ),
-                BlocProvider<AuthBloc>.value(
-                  value: authBloc,
-                ),
-              ],
+        pageBuilder: (context, _, __) => BlocProvider<LandingAnimationBloc>.value(
+              value: landingAnimationBloc,
               child: const SignUpDialog(),
             ));
   }

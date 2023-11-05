@@ -11,7 +11,6 @@ enum AppPages {
   root('root', '/'),
   todos('todos', '/todos'),
   auth('auth', '/auth');
-  
 
   const AppPages(this.name, this.path);
 
@@ -26,10 +25,22 @@ class AppRoutes {
     initialLocation: AppPages.root.path,
     routes: [
       GoRoute(
-        name: AppPages.root.name,
-        path: AppPages.root.path,
-        builder: (context, state) => const InitialPage(),
-      ),
+          name: AppPages.root.name,
+          path: AppPages.root.path,
+          builder: (context, state) => const InitialPage(),
+          // routes: [
+          //   GoRoute(
+          //     name: AppPages.auth.name,
+          //     path: AppPages.auth.path,
+          //     builder: (context, state) => const LandingPage(),
+          //   ),
+          //   GoRoute(
+          //     name: AppPages.todos.name,
+          //     path: AppPages.todos.path,
+          //     builder: (context, state) => const MainPage(),
+          //   ),
+          // ]
+          ),
       GoRoute(
         name: AppPages.auth.name,
         path: AppPages.auth.path,

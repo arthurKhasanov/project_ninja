@@ -20,21 +20,22 @@ class SignInDialog extends StatelessWidget {
         context.read<LandingAnimationBloc>().add(AuthCanceled());
         return true;
       },
-      child: AlertDialog(
-        scrollable: true,
-        clipBehavior: Clip.hardEdge,
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
-        backgroundColor: Colors.white.withOpacity(0.95),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: const [
-            SignInHeaderInfo(),
-            SignInForm(),
-            LogInDialogDivider(),
-            SignUpInfoBlock(),
-          ],
+      child: SafeArea(
+        child: AlertDialog(
+          scrollable: true,
+          clipBehavior: Clip.hardEdge,
+          contentPadding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+          backgroundColor: Colors.white.withOpacity(0.95),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+          content: const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SignInHeaderInfo(),
+              SignInForm(),
+              LogInDialogDivider(),
+              SignUpInfoBlock(),
+            ],
+          ),
         ),
       ),
     );

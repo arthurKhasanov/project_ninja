@@ -12,6 +12,7 @@ class BouncingButton extends StatefulWidget {
 
 class _BouncingButtonState extends State<BouncingButton>
     with SingleTickerProviderStateMixin {
+      
   late Animation<double> _scaleAnimation;
   late AnimationController _animationController;
 

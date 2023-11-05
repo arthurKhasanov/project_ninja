@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_b_ui_layout/core/dependency_injection/service_locator.dart';
 import 'package:flutter_b_ui_layout/ui/routes/app_routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -13,22 +12,19 @@ class InitialPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>(
-      create: (context) => locator(),
-      child: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, state) {
-          SchedulerBinding.instance.addPostFrameCallback(
-            (timeStamp) {
-              if (state is AuthorizedState) {
-                context.goNamed(AppPages.todos.name);
-              } else {
-                context.goNamed(AppPages.auth.name);
-              }
-            },
-          );
-          return const SizedBox();
-        },
-      ),
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        SchedulerBinding.instance.addPostFrameCallback(
+          (timeStamp) {
+            if (state is AuthorizedState) {
+              context.goNamed(AppPages.todos.name);
+            } else {
+              context.goNamed(AppPages.auth.name);
+            }
+          },
+        );
+        return const SizedBox();
+      },
     );
   }
 }

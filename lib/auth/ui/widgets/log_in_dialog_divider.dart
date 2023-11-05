@@ -5,9 +5,9 @@ class LogInDialogDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       mainAxisSize: MainAxisSize.max,
-      children: const [
+      children: [
         Expanded(child: Divider()),
         Padding(
           padding: EdgeInsets.all(8.0),

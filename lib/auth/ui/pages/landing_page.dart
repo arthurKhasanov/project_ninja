@@ -14,9 +14,7 @@ class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
 
   Future<Object?> _startAuth(BuildContext context) {
-    final AuthBloc authBloc = context.read<AuthBloc>();
-    final LandingAnimationBloc landingAnimationBloc =
-        context.read<LandingAnimationBloc>()..add(AuthStarted());
+    final LandingAnimationBloc landingAnimationBloc = context.read<LandingAnimationBloc>()..add(AuthStarted());
 
     return showGeneralDialog(
         context: context,
@@ -24,8 +22,7 @@ class LandingPage extends StatelessWidget {
         barrierLabel: 'Sign In',
         barrierColor: Colors.black87,
         transitionBuilder: (context, animation, secondaryAnimation, child) {
-          final tween =
-              Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
+          final tween = Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
           return SlideTransition(
             position: tween.animate(
               CurvedAnimation(parent: animation, curve: Curves.fastOutSlowIn),
@@ -33,46 +30,35 @@ class LandingPage extends StatelessWidget {
             child: child,
           );
         },
-        pageBuilder: (context, _, __) => MultiBlocProvider(
-              providers: [
-                BlocProvider<LandingAnimationBloc>.value(
-                  value: landingAnimationBloc,
-                ),
-                BlocProvider<AuthBloc>.value(
-                  value: authBloc,
-                ),
-              ],
+        pageBuilder: (context, _, __) => BlocProvider<LandingAnimationBloc>.value(
+              value: landingAnimationBloc,
               child: const SignInDialog(),
             ));
   }
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<LandingAnimationBloc>(
-          create: (context) => LandingAnimationBloc(),
-        ),
-        BlocProvider.value(
-          value: locator<AuthBloc>(),
-        )
-      ],
+    return BlocProvider<LandingAnimationBloc>(
+      create: (context) => LandingAnimationBloc(),
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {},
-        child: BlocBuilder<LandingAnimationBloc, bool>(
-            builder: (context, isDialogShown) {
+        child: BlocBuilder<LandingAnimationBloc, bool>(builder: (context, isDialogShown) {
           return Scaffold(
             resizeToAvoidBottomInset: false,
             body: Stack(children: [
-              const RiveAnimation.asset(
-                'assets/rive_animations/auth/landing_background.riv',
-                fit: BoxFit.cover,
-              ),
-              Positioned.fill(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: const SizedBox(),
-                ),
+              // const RiveAnimation.asset(
+              //   'assets/rive_animations/auth/landing_background.riv',
+              //   fit: BoxFit.cover,
+              // ),
+              // Positioned.fill(
+              //   child: BackdropFilter(
+              //     filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+              //     child: const SizedBox(),
+              //   ),
+              // ),
+              //TODO: find good background riv animation
+              Container(
+                color: Colors.black,
               ),
               AnimatedPositioned(
                 top: isDialogShown ? -50 : 0,
@@ -116,10 +102,7 @@ class LandingPage extends StatelessWidget {
                         },
                         child: const Text(
                           'Start now',
-                          style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 24,
-                              color: Colors.white),
+                          style: TextStyle(fontFamily: 'Montserrat', fontSize: 24, color: Colors.white),
                         ),
                       ),
                     ],
