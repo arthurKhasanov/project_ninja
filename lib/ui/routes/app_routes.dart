@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_bloc.dart';
+import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../auth/ui/pages/auth_page.dart';
 import '../../auth/ui/pages/landing_page.dart';
 import '../widgets/main_screen.dart';
 
@@ -9,7 +11,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 enum AppPages {
   root('root', '/'),
-  todos('todos', '/todos'),
+  tasks('tasks', '/tasks'),
   auth('auth', '/auth');
 
   const AppPages(this.name, this.path);
@@ -23,32 +25,24 @@ class AppRoutes {
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
     initialLocation: AppPages.root.path,
+    redirect: (BuildContext context, GoRouterState state) {
+      final AuthState authState = context.read<AuthBloc>().state;
+
+      if (authState is AuthorizedState) {
+        return AppPages.tasks.path;
+      } else {
+        return AppPages.auth.path;
+      }
+    },
     routes: [
-      GoRoute(
-          name: AppPages.root.name,
-          path: AppPages.root.path,
-          builder: (context, state) => const InitialPage(),
-          // routes: [
-          //   GoRoute(
-          //     name: AppPages.auth.name,
-          //     path: AppPages.auth.path,
-          //     builder: (context, state) => const LandingPage(),
-          //   ),
-          //   GoRoute(
-          //     name: AppPages.todos.name,
-          //     path: AppPages.todos.path,
-          //     builder: (context, state) => const MainPage(),
-          //   ),
-          // ]
-          ),
       GoRoute(
         name: AppPages.auth.name,
         path: AppPages.auth.path,
         builder: (context, state) => const LandingPage(),
       ),
       GoRoute(
-        name: AppPages.todos.name,
-        path: AppPages.todos.path,
+        name: AppPages.tasks.name,
+        path: AppPages.tasks.path,
         builder: (context, state) => const MainPage(),
       ),
     ],

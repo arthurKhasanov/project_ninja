@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_visible_for_testing_member
+
 import 'package:flutter_b_ui_layout/auth/auth_core/auth_exception_handler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dartz/dartz.dart';
@@ -11,6 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required AuthRepository authRepository})
       : _authRepository = authRepository,
         super(UnAuthorizedState()) {
+          
     isUserSignedIn();
     on<SignInEvent>(_singIn);
     on<SignUpEvent>(_signUp);
@@ -34,6 +37,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     SignInEvent event,
     Emitter<AuthState> emit,
   ) async {
+    emit(LoadingState());
     final result = await _authRepository.signInWithEmailAndPassword(
       email: event.email,
       password: event.password,
@@ -45,6 +49,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     SignUpEvent event,
     Emitter<AuthState> emit,
   ) async {
+    emit(LoadingState());
     final result = await _authRepository.createUserWithEmailAndPassword(
       email: event.email,
       password: event.password,

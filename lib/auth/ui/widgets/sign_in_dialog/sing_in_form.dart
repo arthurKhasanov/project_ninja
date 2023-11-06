@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_event.dart';
+import 'package:flutter_b_ui_layout/ui/routes/app_routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rive/rive.dart';
 
 import '../../../domain/bloc/auth_bloc/auth_bloc.dart';
@@ -64,7 +66,6 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   Future<Object?> _resetPassword(BuildContext context) {
-    final authBloc = context.read<AuthBloc>();
     final landingAnimationBloc = context.read<LandingAnimationBloc>();
 
     return showGeneralDialog(
@@ -135,6 +136,7 @@ class _SignInFormState extends State<SignInForm> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
+        if (state is LoadingState) return;
         if (state is UnAuthorizedState) {
           if (state.message == null) return;
 
@@ -165,7 +167,7 @@ class _SignInFormState extends State<SignInForm> {
               _firebasePasswordAnswer = null;
               Navigator.pop(context);
             },
-          );
+          ).whenComplete(() => context.go(AppPages.root.name));
         }
       },
       child: Stack(

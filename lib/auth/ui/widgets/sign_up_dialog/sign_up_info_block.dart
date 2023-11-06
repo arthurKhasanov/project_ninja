@@ -12,7 +12,6 @@ class SignUpInfoBlock extends StatelessWidget {
 
   Future<Object?> _signUp(BuildContext context) {
     final landingAnimationBloc = context.read<LandingAnimationBloc>();
-    final authBloc = context.read<AuthBloc>();
 
     return showGeneralDialog(
         context: context,
@@ -40,12 +39,12 @@ class SignUpInfoBlock extends StatelessWidget {
       children: [
         const Text(
           'Don\'t have an account?',
-          style: TextStyle(fontFamily: 'Inter', fontSize: 12),
+          style: TextStyle(fontSize: 12),
         ),
         const Text(
           'Sign up with Email or continue with Google account',
           textAlign: TextAlign.center,
-          style: TextStyle(fontFamily: 'Inter', fontSize: 12),
+          style: TextStyle(fontSize: 12),
         ),
         const SizedBox(
           height: 12,

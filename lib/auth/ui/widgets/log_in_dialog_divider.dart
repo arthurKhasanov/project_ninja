@@ -13,7 +13,7 @@ class LogInDialogDivider extends StatelessWidget {
           padding: EdgeInsets.all(8.0),
           child: Text(
             'OR',
-            style: TextStyle(fontFamily: 'Inter', color: Colors.black87),
+            style: TextStyle(color: Colors.black87),
           ),
         ),
         Expanded(child: Divider()),

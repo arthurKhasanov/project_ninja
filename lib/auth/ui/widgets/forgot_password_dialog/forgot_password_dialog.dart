@@ -19,13 +19,12 @@ class ForgotPasswordDialog extends StatelessWidget {
       child: AlertDialog(
         scrollable: true,
         clipBehavior: Clip.hardEdge,
-        contentPadding:
-            const EdgeInsets.only(top: 32, left: 24, right: 24, bottom: 24),
+        contentPadding: const EdgeInsets.only(top: 32, left: 24, right: 24, bottom: 24),
         backgroundColor: Colors.white.withOpacity(0.95),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-        content: Column(
+        content: const Column(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             ForgotPasswordHeaderInfo(),
             ForgotPasswordForm(),
           ],

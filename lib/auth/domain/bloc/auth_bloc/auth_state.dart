@@ -20,3 +20,8 @@ class AuthorizedState extends AuthState {
   @override
   List<Object?> get props => [user];
 }
+
+class LoadingState extends AuthState {
+  @override
+  List<Object?> get props => [];
+}

@@ -5,21 +5,19 @@ class ForgotPasswordHeaderInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
+    return const Column(
+      children: [
         Text(
           'Reset password',
           textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.black87, fontFamily: 'Montserrat', fontSize: 35),
+          style: TextStyle(color: Colors.black87, fontFamily: 'Montserrat', fontSize: 35),
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 16),
           child: Text(
             'Please, enter your email address. You will recieve a link to create a new password',
             textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.black87, fontFamily: 'Inter', fontSize: 12),
+            style: TextStyle(color: Colors.black87, fontSize: 12),
           ),
         ),
       ],

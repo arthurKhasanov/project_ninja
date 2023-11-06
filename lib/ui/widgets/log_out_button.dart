@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_bloc.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_event.dart';
 import 'package:flutter_b_ui_layout/core/dependency_injection/service_locator.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_b_ui_layout/ui/routes/app_routes.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 class LogOutButton extends StatefulWidget {
   const LogOutButton({
@@ -39,8 +40,7 @@ class _LogOutButtonState extends State<LogOutButton> {
               child: Container(
                 height: 54,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: const Color.fromARGB(255, 99, 117, 251)),
+                    borderRadius: BorderRadius.circular(12), color: const Color.fromARGB(255, 99, 117, 251)),
               ),
             ),
             ListTile(
@@ -48,10 +48,10 @@ class _LogOutButtonState extends State<LogOutButton> {
                 setState(() {
                   isActive = !isActive;
                 });
-                await Future.delayed(const Duration(milliseconds: 200))
-                    .whenComplete(
-                  () => 
-                  locator<AuthBloc>().add(LogOutEvent()),
+                await Future.delayed(const Duration(milliseconds: 200)).whenComplete(
+                  () {
+                    locator<AuthBloc>().add(LogOutEvent());
+                  },
                 );
               },
               leading: const Icon(

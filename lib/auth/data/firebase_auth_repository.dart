@@ -5,14 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_b_ui_layout/auth/domain/auth_repository.dart/auth_repository.dart';
 import 'package:flutter_b_ui_layout/core/network_checker/network_checker.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../auth_core/auth_exception_handler.dart';
 
 class FirebaseAuthRepository implements AuthRepository {
-  FirebaseAuthRepository(
-      {required FirebaseAuth firebaseAuthInstance,
-      required NetworkChecker networkChecker})
+  FirebaseAuthRepository({required FirebaseAuth firebaseAuthInstance, required NetworkChecker networkChecker})
       : _firebaseInstance = firebaseAuthInstance,
         _networkChecker = networkChecker;
 
@@ -35,26 +32,25 @@ class FirebaseAuthRepository implements AuthRepository {
     required String password,
   }) async {
     try {
-      final UserCredential userCredential = await _firebaseInstance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      final UserCredential userCredential =
+          await _firebaseInstance.createUserWithEmailAndPassword(email: email, password: password);
       if (userCredential.user != null) return Right(userCredential.user!);
       return const Left(AuthError.error);
     } on FirebaseAuthException catch (error) {
       return Left(AuthExceptionHandler.determineError(error));
     } on SocketException catch (_) {
       //TODO: replace with class Error
-      return Left(AuthError.error);
+      return const Left(AuthError.error);
     } catch (e) {
       return const Left(AuthError.error);
     }
   }
 
   @override
-  Future<Either<AuthError, User>> signInWithEmailAndPassword(
-      {required String email, required String password}) async {
+  Future<Either<AuthError, User>> signInWithEmailAndPassword({required String email, required String password}) async {
     try {
-      final UserCredential userCredential = await _firebaseInstance
-          .signInWithEmailAndPassword(email: email, password: password);
+      final UserCredential userCredential =
+          await _firebaseInstance.signInWithEmailAndPassword(email: email, password: password);
 
       if (userCredential.user != null) return Right(userCredential.user!);
       return const Left(AuthError.userNotFound);
@@ -69,12 +65,9 @@ class FirebaseAuthRepository implements AuthRepository {
   Future<Either<AuthError, User>> signInWithGoogleAccount() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
-    final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-    final UserCredential userCredential =
-        await _firebaseInstance.signInWithCredential(credential);
+    final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+    final credential = GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+    final UserCredential userCredential = await _firebaseInstance.signInWithCredential(credential);
     if (userCredential.user != null) return Right(userCredential.user!);
     return const Left(AuthError.error);
   }
