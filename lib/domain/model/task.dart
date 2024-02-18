@@ -1,15 +1,23 @@
-class Task {
+import 'package:flutter/widgets.dart';
+
+class TaskModel {
   final int id;
   final String title;
-  final String description;
-  final DateTime dateFinish;
+  final String? description;
+  final DateTime? dateStart;
+  final DateTime? dateFinish;
+  final Color? color;
   final bool isDone;
+  final int priority;
 
-  Task({
+  TaskModel({
     required this.id,
     required this.title,
-    required this.description,
-    required this.dateFinish,
-    required this.isDone,
+    this.description,
+    this.dateStart,
+    this.dateFinish,
+    this.color,
+    this.isDone = false,
+    this.priority = 0,
   });
 }

@@ -1,11 +1,11 @@
 import 'package:flutter_b_ui_layout/domain/model/task.dart';
 
-class Project {
+class ProjectModel {
   final int id;
   final String title;
-  final List<Task> tasks;
+  final List<TaskModel> tasks;
 
-  Project({
+  ProjectModel({
     required this.id,
     required this.title,
     required this.tasks,

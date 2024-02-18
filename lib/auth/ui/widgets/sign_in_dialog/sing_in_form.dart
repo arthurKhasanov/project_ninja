@@ -167,7 +167,7 @@ class _SignInFormState extends State<SignInForm> {
               _firebasePasswordAnswer = null;
               Navigator.pop(context);
             },
-          ).whenComplete(() => context.go(AppPages.root.name));
+          ).whenComplete(() => context.push(AppPages.root.path));
         }
       },
       child: Stack(

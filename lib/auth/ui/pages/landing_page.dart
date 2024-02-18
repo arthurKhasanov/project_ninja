@@ -1,10 +1,7 @@
-// import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/landing_animation_bloc/landing_animation_bloc.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/landing_animation_bloc/landing_animation_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:rive/rive.dart';
 import '../widgets/bouncing_button.dart';
 import '../widgets/sign_in_dialog/sign_in_dialog.dart';
 

@@ -8,19 +8,19 @@ import '../../domain/model/task.dart';
 
 class CustomDrawer extends StatefulWidget {
   CustomDrawer({super.key});
-  final List<Project> projects = [
-    Project(
+  final List<ProjectModel> projects = [
+    ProjectModel(
       id: 1,
       title: 'First project',
       tasks: [
-        Task(
+        TaskModel(
           id: 1,
           title: 'First Task',
           description: 'this is my first task',
           dateFinish: DateTime.now(),
           isDone: true,
         ),
-        Task(
+        TaskModel(
           id: 2,
           title: 'Secont Task',
           description: 'this is my second task',
@@ -29,18 +29,18 @@ class CustomDrawer extends StatefulWidget {
         ),
       ],
     ),
-    Project(
+    ProjectModel(
       id: 2,
       title: 'Second project',
       tasks: [
-        Task(
+        TaskModel(
           id: 1,
           title: 'First Task',
           description: 'this is my third task',
           dateFinish: DateTime.now(),
           isDone: false,
         ),
-        Task(
+        TaskModel(
           id: 2,
           title: 'Secont Task',
           description: 'this is my fourth task',
@@ -56,12 +56,11 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
-  Project? selectedProject;
+  ProjectModel? selectedProject;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-
       child: Container(
         width: 296,
         height: double.infinity,

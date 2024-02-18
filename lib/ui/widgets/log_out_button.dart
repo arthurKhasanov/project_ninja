@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_bloc.dart';
 import 'package:flutter_b_ui_layout/auth/domain/bloc/auth_bloc/auth_event.dart';
 import 'package:flutter_b_ui_layout/core/dependency_injection/service_locator.dart';
-import 'package:flutter_b_ui_layout/ui/routes/app_routes.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 
 class LogOutButton extends StatefulWidget {
   const LogOutButton({

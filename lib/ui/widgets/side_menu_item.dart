@@ -9,7 +9,7 @@ class SideMenuItem extends StatelessWidget {
     required this.isActive,
   });
 
-  final Project project;
+  final ProjectModel project;
   final VoidCallback onTap;
   final bool isActive;
 
